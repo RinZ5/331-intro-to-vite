@@ -20,7 +20,7 @@ defineProps<{
   cursor: pointer;
   border: 1px solid #39495c;
   margin-bottom: 18px;
-  /* text-align: right; */
+  text-align: right;
 }
 
 .event-category:hover {
