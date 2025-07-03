@@ -32,6 +32,17 @@
       "time": "11:00",
       "petsAllowed": false,
       "organizer": "Carey Wales"
+    },
+    {
+      "id": 7592810,
+      "category": "animal welfare",
+      "title": "Dog Adoption Day",
+      "description": "Find your new canine companion at this event.",
+      "location": "Woof Town",
+      "date": "August 20, 2022",
+      "time": "10:00",
+      "petsAllowed": true,
+      "organizer": "Doggy Daycare"
     }
   ]
 }
