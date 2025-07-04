@@ -9,7 +9,7 @@ defineProps<{
   <div class="student-class">
     <div class="student-card">
       <h2>{{ student.name }} {{ student.surname }}</h2>
-      <p>{{ student.gpa }}</p>
+      <p>GPA: {{ student.gpa }}</p>
     </div>
   </div>
 </template>
