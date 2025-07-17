@@ -6,7 +6,7 @@ import EventService from '@/services/EventService'
 const event = ref<Event>()
 const props = defineProps({
   id: {
-    type: Number,
+    type: String,
     required: true
   }
 })
