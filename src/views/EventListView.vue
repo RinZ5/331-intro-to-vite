@@ -8,21 +8,29 @@ import { RouterLink } from 'vue-router'
 const events = ref<Event[] | null>(null)
 const totalEvents = ref(0)
 const hasNextPage = computed(() => {
-  const totalPages = Math.ceil(totalEvents.value / 2)
+  const totalPages = Math.ceil(totalEvents.value / limit.value)
   return page.value < totalPages
 })
+const maxEventsReach = computed(() => {
+  return limit.value >= totalEvents.value
+})
 const props = defineProps({
+  limit: {
+    type: Number,
+    required: true,
+  },
   page: {
     type: Number,
     required: true,
   },
 })
+const limit = computed(() => props.limit)
 const page = computed(() => props.page)
 
 onMounted(() => {
   watchEffect(() => {
     events.value = null
-    EventService.getEvents(2, page.value)
+    EventService.getEvents(limit.value, page.value)
       .then((response) => {
         events.value = response.data
         totalEvents.value = response.headers['x-total-count']
@@ -41,17 +49,33 @@ onMounted(() => {
     <div class='pagination'>
       <RouterLink
         id="page-prev"
-        :to="{ name: 'event-list-view', query: { page: page - 1 } }"
+        :to="{ name: 'event-list-view', query: { limit, page: page - 1 } }"
         rel="prev"
         v-if="page != 1"
         >&#60; Prev Page</RouterLink
       >
       <RouterLink
         id="page-next"
-        :to="{ name: 'event-list-view', query: { page: page + 1 } }"
+        :to="{ name: 'event-list-view', query: { limit, page: page + 1 } }"
         rel="next"
         v-if="hasNextPage"
         >Next Page &#62;</RouterLink
+      >
+    </div>
+    <div class="limit">
+      <RouterLink
+        id="decrease-limit"
+        :to="{ name: 'event-list-view', query: { limit: limit - 1, page } }"
+        rel="decrease"
+        v-if="limit != 1"
+        >&#60; Decrease Limit</RouterLink
+      >
+      <RouterLink
+        id="incrase-limit"
+        :to="{ name: 'event-list-view', query: { limit: limit + 1, page } }"
+        rel="incrase"
+        v-if="!maxEventsReach"
+        >Incrase Limit &#62;</RouterLink
       >
     </div>
   </div>
@@ -63,19 +87,19 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
 }
-.pagination {
+.pagination, .limit {
   display: flex;
   width: 290px
 }
-.pagination a {
+.pagination a, .limit a {
   flex: 1;
   text-decoration: none;
   color: #2c3e50;
 }
-#page-prev {
+#page-prev, #decrease-limit{
   text-align: left;
 }
-#page-next {
+#page-next, #incrase-limit {
   text-align: right;
 }
 </style>
