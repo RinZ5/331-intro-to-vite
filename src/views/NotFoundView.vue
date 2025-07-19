@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { defineProps, withDefaults } from 'vue';
+import { defineProps, withDefaults } from 'vue'
 
 const props = withDefaults(
   defineProps<{
     resource: string
   }>(),
   {
-    resource: 'page'
-  }
+    resource: 'page',
+  },
 )
 </script>
 
