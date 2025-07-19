@@ -46,7 +46,7 @@ onMounted(() => {
   <h1>Events For Good</h1>
   <div class="events">
     <EventCard v-for="event in events" :key="event.id" :event="event" />
-    <div class='pagination'>
+    <div class="pagination">
       <RouterLink
         id="page-prev"
         :to="{ name: 'event-list-view', query: { limit, page: page - 1 } }"
@@ -87,19 +87,23 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
 }
-.pagination, .limit {
+.pagination,
+.limit {
   display: flex;
-  width: 290px
+  width: 290px;
 }
-.pagination a, .limit a {
+.pagination a,
+.limit a {
   flex: 1;
   text-decoration: none;
   color: #2c3e50;
 }
-#page-prev, #decrease-limit{
+#page-prev,
+#decrease-limit {
   text-align: left;
 }
-#page-next, #incrase-limit {
+#page-next,
+#incrase-limit {
   text-align: right;
 }
 </style>
