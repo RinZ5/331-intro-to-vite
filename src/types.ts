@@ -20,3 +20,8 @@ export interface Student {
   penAmount: number
   description: string
 }
+
+export interface MessagesState {
+  message: string
+  editMessage: string
+}
