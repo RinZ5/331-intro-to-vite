@@ -37,6 +37,7 @@ onMounted(() => {
         events.value = response.data
         totalEvents.value = response.headers['x-total-count']
       })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .catch((error) => {
         router.push({ name: 'nextwork-error-view' })
       })
