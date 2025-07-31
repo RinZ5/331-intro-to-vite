@@ -4,7 +4,6 @@ import type { Event } from '@/types'
 import { ref, onMounted, computed, watchEffect } from 'vue'
 import EventService from '@/services/EventService'
 import { RouterLink } from 'vue-router'
-import nProgress from 'nprogress'
 import router from '@/router'
 
 const events = ref<Event[] | null>(null)
@@ -47,30 +46,44 @@ onMounted(() => {
 
 <template>
   <h1>Events For Good</h1>
-  <div class="events">
+  <div class="flex flex-col items-center">
     <EventCard v-for="event in events" :key="event.id" :event="event" />
     <div class="pagination">
-      <RouterLink id="page-prev" :to="{ name: 'event-list-view', query: { limit, page: page - 1 } }" rel="prev"
-        v-if="page != 1">&#60; Prev Page</RouterLink>
-      <RouterLink id="page-next" :to="{ name: 'event-list-view', query: { limit, page: page + 1 } }" rel="next"
-        v-if="hasNextPage">Next Page &#62;</RouterLink>
+      <RouterLink
+        id="page-prev"
+        :to="{ name: 'event-list-view', query: { limit, page: page - 1 } }"
+        rel="prev"
+        v-if="page != 1"
+        >&#60; Prev Page</RouterLink
+      >
+      <RouterLink
+        id="page-next"
+        :to="{ name: 'event-list-view', query: { limit, page: page + 1 } }"
+        rel="next"
+        v-if="hasNextPage"
+        >Next Page &#62;</RouterLink
+      >
     </div>
     <div class="limit">
-      <RouterLink id="decrease-limit" :to="{ name: 'event-list-view', query: { limit: limit - 1, page } }"
-        rel="decrease" v-if="limit != 1">&#60; Decrease Limit</RouterLink>
-      <RouterLink id="incrase-limit" :to="{ name: 'event-list-view', query: { limit: limit + 1, page } }" rel="incrase"
-        v-if="!maxEventsReach">Incrase Limit &#62;</RouterLink>
+      <RouterLink
+        id="decrease-limit"
+        :to="{ name: 'event-list-view', query: { limit: limit - 1, page } }"
+        rel="decrease"
+        v-if="limit != 1"
+        >&#60; Decrease Limit</RouterLink
+      >
+      <RouterLink
+        id="incrase-limit"
+        :to="{ name: 'event-list-view', query: { limit: limit + 1, page } }"
+        rel="incrase"
+        v-if="!maxEventsReach"
+        >Incrase Limit &#62;</RouterLink
+      >
     </div>
   </div>
 </template>
 
 <style scoped>
-.events {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .pagination,
 .limit {
   display: flex;
