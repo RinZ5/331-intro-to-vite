@@ -1,3 +1,7 @@
 @import 'tailwindcss';
 
 @config "../../tailwind.config.js";
+
+h1 {
+  @apply text-4xl mb-8;
+}

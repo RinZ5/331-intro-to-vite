@@ -9,8 +9,8 @@ import router from '@/router'
 const events = ref<Event[] | null>(null)
 const totalEvents = ref(0)
 const hasNextPage = computed(() => {
-  // const totalPages = Math.ceil(totalEvents.value / limit.value)
-  const totalPages = Math.ceil(totalEvents.value / 3)
+  const totalPages = Math.ceil(totalEvents.value / limit.value)
+  // const totalPages = Math.ceil(totalEvents.value / 3)
   return page.value < totalPages
 })
 const maxEventsReach = computed(() => {
@@ -31,8 +31,8 @@ const page = computed(() => props.page)
 
 onMounted(() => {
   watchEffect(() => {
-    // EventService.getEvents(limit.value, page.value)
-    EventService.getEvents(3, page.value)
+    EventService.getEvents(limit.value, page.value)
+      // EventService.getEvents(3, page.value)
       .then((response) => {
         events.value = response.data
         totalEvents.value = response.headers['x-total-count']
@@ -49,9 +49,10 @@ onMounted(() => {
   <h1>Events For Good</h1>
   <div class="flex flex-col items-center">
     <EventCard v-for="event in events" :key="event.id" :event="event" />
-    <div class="pagination">
+    <div class="flex justify-between w-72 mb-4">
       <RouterLink
         id="page-prev"
+        class="flex-1 text-left no-underline text-gray-700 hover:text-gray-900"
         :to="{ name: 'event-list-view', query: { limit, page: page - 1 } }"
         rel="prev"
         v-if="page != 1"
@@ -59,15 +60,17 @@ onMounted(() => {
       >
       <RouterLink
         id="page-next"
+        class="flex-1 text-right no-underline text-gray-700 hover:text-gray-900"
         :to="{ name: 'event-list-view', query: { limit, page: page + 1 } }"
         rel="next"
         v-if="hasNextPage"
         >Next Page &#62;</RouterLink
       >
     </div>
-    <div class="limit">
+    <div class="flex justify-between w-72">
       <RouterLink
         id="decrease-limit"
+        class="flex-1 text-left no-underline text-gray-700 hover:text-gray-900"
         :to="{ name: 'event-list-view', query: { limit: limit - 1, page } }"
         rel="decrease"
         v-if="limit != 1"
@@ -75,6 +78,7 @@ onMounted(() => {
       >
       <RouterLink
         id="incrase-limit"
+        class="flex-1 text-right no-underline text-gray-700 hover:text-gray-900"
         :to="{ name: 'event-list-view', query: { limit: limit + 1, page } }"
         rel="incrase"
         v-if="!maxEventsReach"
@@ -85,7 +89,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.pagination,
+/* .pagination,
 .limit {
   display: flex;
   width: 290px;
@@ -106,5 +110,5 @@ onMounted(() => {
 #page-next,
 #incrase-limit {
   text-align: right;
-}
+} */
 </style>

@@ -2,11 +2,11 @@
 import { toRefs } from 'vue'
 import type { Event } from '@/types'
 import { useRouter } from 'vue-router'
-import { useMessageStore } from '@/stores/message';
+import { useMessageStore } from '@/stores/message'
 
 const props = defineProps<{
   event: Event
-  id: String
+  id: string
 }>()
 
 const { event } = toRefs(props)

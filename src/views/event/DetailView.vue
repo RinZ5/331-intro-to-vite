@@ -14,7 +14,7 @@ const { editMessage } = storeToRefs(store)
 </script>
 
 <template>
-  <div id="editMessage" v-if="editMessage">
+  <div id="editMessage" class="animate-fade" v-if="editMessage">
     <h4>{{ editMessage }}</h4>
   </div>
   <p>{{ event.time }} on {{ event.date }} @ {{ event.location }}</p>
@@ -22,7 +22,7 @@ const { editMessage } = storeToRefs(store)
 </template>
 
 <style>
-@keyframes yellowfade {
+/* @keyframes yellowfade {
   from {
     background-color: yellow;
   }
@@ -34,5 +34,5 @@ const { editMessage } = storeToRefs(store)
 
 #editMessage {
   animation: yellowfade 3s ease-in-out;
-}
+} */
 </style>
