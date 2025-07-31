@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { toRefs, defineProps } from 'vue'
 import type { Event } from '@/types'
-import { useMessageStore } from '@/stores/message';
-import { storeToRefs } from 'pinia';
+import { useMessageStore } from '@/stores/message'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps<{
   event: Event
-  id: String
+  id: string
 }>()
 const { event } = toRefs(props)
 const store = useMessageStore()
