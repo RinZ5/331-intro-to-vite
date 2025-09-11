@@ -6,6 +6,7 @@ import EventDetailView from '@/views/event/DetailView.vue'
 import EventRegisterView from '@/views/event/RegisterView.vue'
 import EventEditView from '@/views/event/EditView.vue'
 import EventLayoutView from '@/views/event/LayoutView.vue'
+import AddEventView from '@/views/event/EventFormView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import nProgress from 'nprogress'
@@ -35,11 +36,12 @@ const router = createRouter({
         return EventService.getEvent(id)
           .then((response) => {
             eventStore.setEvent(response.data)
-          }).catch((error) => {
+          })
+          .catch((error) => {
             if (error.response && error.response.status === 404) {
               return {
                 name: '404-resource-view',
-                params: { resource: 'event' }
+                params: { resource: 'event' },
               }
             } else {
               return { name: 'network-error-view' }
@@ -73,6 +75,11 @@ const router = createRouter({
       component: AboutView,
     },
     {
+      path: '/add-event',
+      name: 'add-event',
+      component: AddEventView,
+    },
+    {
       path: '/student',
       name: 'student-view',
       component: StudentView,
@@ -100,7 +107,7 @@ const router = createRouter({
     } else {
       return { top: 0 }
     }
-  }
+  },
 })
 
 router.beforeEach(() => {

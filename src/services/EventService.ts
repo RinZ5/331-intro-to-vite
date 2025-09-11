@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const apiClient = axios.create({
   // baseURL: 'https://my-json-server.typicode.com/RinZ5/331-intro-to-vite/',
-  baseURL: 'http://localhost:8080/',
+  baseURL: import.meta.env.VITE_BACKEND_URL,
   withCredentials: false,
   headers: {
     Accept: 'application/json',
