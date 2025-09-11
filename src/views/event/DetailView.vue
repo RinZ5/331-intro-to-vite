@@ -17,7 +17,8 @@ const { editMessage } = storeToRefs(store)
   <div id="editMessage" class="animate-fade" v-if="editMessage">
     <h4>{{ editMessage }}</h4>
   </div>
-  <p>{{ event.time }} on {{ event.date }} @ {{ event.location }}</p>
+  <!-- <p>{{ event.time }} on {{ event.date }} @ {{ event.location }}</p> -->
+  <p>{{ event.title }} @ {{ event.location }}</p>
   <p>{{ event.description }}</p>
 </template>
 

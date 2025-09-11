@@ -39,7 +39,7 @@ onMounted(() => {
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .catch((error) => {
-        router.push({ name: 'nextwork-error-view' })
+        router.push({ name: 'network-error-view' })
       })
   })
 })
@@ -50,40 +50,20 @@ onMounted(() => {
   <div class="flex flex-col items-center">
     <EventCard v-for="event in events" :key="event.id" :event="event" />
     <div class="flex justify-between w-72 mb-4">
-      <RouterLink
-        id="page-prev"
-        class="flex-1 text-left no-underline text-gray-700 hover:text-gray-900"
-        :to="{ name: 'event-list-view', query: { limit, page: page - 1 } }"
-        rel="prev"
-        v-if="page != 1"
-        >&#60; Prev Page</RouterLink
-      >
-      <RouterLink
-        id="page-next"
-        class="flex-1 text-right no-underline text-gray-700 hover:text-gray-900"
-        :to="{ name: 'event-list-view', query: { limit, page: page + 1 } }"
-        rel="next"
-        v-if="hasNextPage"
-        >Next Page &#62;</RouterLink
-      >
+      <RouterLink id="page-prev" class="flex-1 text-left no-underline text-gray-700 hover:text-gray-900"
+        :to="{ name: 'event-list-view', query: { limit, page: page - 1 } }" rel="prev" v-if="page != 1">&#60; Prev Page
+      </RouterLink>
+      <RouterLink id="page-next" class="flex-1 text-right no-underline text-gray-700 hover:text-gray-900"
+        :to="{ name: 'event-list-view', query: { limit, page: page + 1 } }" rel="next" v-if="hasNextPage">Next Page
+        &#62;</RouterLink>
     </div>
     <div class="flex justify-between w-72">
-      <RouterLink
-        id="decrease-limit"
-        class="flex-1 text-left no-underline text-gray-700 hover:text-gray-900"
-        :to="{ name: 'event-list-view', query: { limit: limit - 1, page } }"
-        rel="decrease"
-        v-if="limit != 1"
-        >&#60; Decrease Limit</RouterLink
-      >
-      <RouterLink
-        id="incrase-limit"
-        class="flex-1 text-right no-underline text-gray-700 hover:text-gray-900"
-        :to="{ name: 'event-list-view', query: { limit: limit + 1, page } }"
-        rel="incrase"
-        v-if="!maxEventsReach"
-        >Incrase Limit &#62;</RouterLink
-      >
+      <RouterLink id="decrease-limit" class="flex-1 text-left no-underline text-gray-700 hover:text-gray-900"
+        :to="{ name: 'event-list-view', query: { limit: limit - 1, page } }" rel="decrease" v-if="limit != 1">&#60;
+        Decrease Limit</RouterLink>
+      <RouterLink id="incrase-limit" class="flex-1 text-right no-underline text-gray-700 hover:text-gray-900"
+        :to="{ name: 'event-list-view', query: { limit: limit + 1, page } }" rel="incrase" v-if="!maxEventsReach">
+        Incrase Limit &#62;</RouterLink>
     </div>
   </div>
 </template>

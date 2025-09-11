@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import EventService from '@/services/EventService';
 import type { Event } from '@/types';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const event = ref<Event>({
   id: 0,
@@ -13,12 +15,22 @@ const event = ref<Event>({
   petsAllowed: false,
   organizer: ''
 })
+const router = useRouter()
+function saveEvent() {
+  EventService.saveEvent(event.value)
+    .then((response) => {
+      router.push({ name: 'event-detail-view', params: { id: response.data.id } })
+    })
+    .catch(() => {
+      router.push({ name: 'network-error-view' })
+    })
+}
 </script>
 
 <template>
   <div>
     <h1>Create an event</h1>
-    <form>
+    <form @submit.prevent="saveEvent">
       <label>Category</label>
       <input v-model="event.category" type="text" placeholder="Category" class="field" />
       <h3>Name & describe your event</h3>
