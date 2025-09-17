@@ -29,21 +29,6 @@ const props = defineProps({
 const limit = computed(() => props.limit)
 const page = computed(() => props.page)
 
-onMounted(() => {
-  watchEffect(() => {
-    EventService.getEvents(limit.value, page.value)
-      // EventService.getEvents(3, page.value)
-      .then((response) => {
-        events.value = response.data
-        totalEvents.value = response.headers['x-total-count']
-      })
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .catch((error) => {
-        router.push({ name: 'network-error-view' })
-      })
-  })
-})
-
 const keyword = ref('')
 function updateKeyword(value: string) {
   let queryFunction;
@@ -61,6 +46,23 @@ function updateKeyword(value: string) {
     router.push({ name: 'NetworkError' })
   })
 }
+
+onMounted(() => {
+  watchEffect(() => {
+    // EventService.getEvents(limit.value, page.value)
+    //   // EventService.getEvents(3, page.value)
+    //   .then((response) => {
+    //     events.value = response.data
+    //     totalEvents.value = response.headers['x-total-count']
+    //   })
+    //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    //   .catch((error) => {
+    //     router.push({ name: 'network-error-view' })
+    //   })
+    updateKeyword(keyword.value)
+  })
+})
+
 </script>
 
 <template>
