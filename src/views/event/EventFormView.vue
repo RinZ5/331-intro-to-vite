@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import EventService from '@/services/EventService';
 import { useMessageStore } from '@/stores/message';
-import type { Event } from '@/types';
+import type { EventItem } from '@/types';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-const event = ref<Event>({
-  id: 0,
+const event = ref<EventItem>({
   category: '',
   title: '',
   description: '',

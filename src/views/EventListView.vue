@@ -43,15 +43,38 @@ onMounted(() => {
       })
   })
 })
+
+const keyword = ref('')
+function updateKeyword(value: string) {
+  let queryFunction;
+  if (keyword.value === '') {
+    queryFunction = EventService.getEvents(3, page.value)
+  } else {
+    queryFunction = EventService.getEventsByKeyword(keyword.value, 3, page.value)
+  }
+  queryFunction.then((response) => {
+    events.value = response.data
+    console.log('events', events.value)
+    totalEvents.value = response.headers['x-total-count']
+    console.log('totalEvent', totalEvents.value)
+  }).catch(() => {
+    router.push({ name: 'NetworkError' })
+  })
+}
 </script>
 
 <template>
   <h1>Events For Good</h1>
   <div class="flex flex-col items-center">
+    <div class="w-64">
+      <!-- <BaseInput v-model="keyword" label="Search..." @input="updateKeyword" /> -->
+      <input v-model="keyword" label="Search..." @input="updateKeyword"></input>
+    </div>
     <EventCard v-for="event in events" :key="event.id" :event="event" />
     <div class="flex justify-between w-72 mb-4">
       <RouterLink id="page-prev" class="flex-1 text-left no-underline text-gray-700 hover:text-gray-900"
-        :to="{ name: 'event-list-view', query: { limit, page: page - 1 } }" rel="prev" v-if="page != 1">&#60; Prev Page
+        :to="{ name: 'event-list-view', query: { limit, page: page - 1 } }" rel="prev" v-if="page != 1">&#60; Prev
+        Page
       </RouterLink>
       <RouterLink id="page-next" class="flex-1 text-right no-underline text-gray-700 hover:text-gray-900"
         :to="{ name: 'event-list-view', query: { limit, page: page + 1 } }" rel="next" v-if="hasNextPage">Next Page
