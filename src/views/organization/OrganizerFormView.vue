@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import SingleImageUpload from '@/components/SingleImageUpload.vue';
 import OrganizerService from '@/services/OrganizerService';
 import type { Organizer } from '@/types';
 import { ref } from 'vue';
@@ -7,13 +8,14 @@ import { useRouter } from 'vue-router';
 const organizer = ref<Organizer>({
   id: 0,
   name: '',
-  address: ''
+  address: '',
+  image: undefined
 })
 const router = useRouter()
 function saveOrganizer() {
   OrganizerService.saveOrganizer(organizer.value)
-    .then(() => {
-      router.push({ name: 'event-list-view' })
+    .then((response) => {
+      router.push({ name: 'organizer-detail-view', params: { id: response.data.id } })
     })
     .catch(() => {
       router.push({ name: 'network-error-view' })
@@ -30,6 +32,9 @@ function saveOrganizer() {
 
       <label>Address</label>
       <input v-model="organizer.address" type="text" placeholder="Address" class="field" />
+
+      <h3>The image of the Organizer</h3>
+      <SingleImageUpload v-model="organizer.image" />
 
       <button class="button" type="submit">Submit</button>
     </form>

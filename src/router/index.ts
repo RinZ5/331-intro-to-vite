@@ -13,6 +13,8 @@ import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import nProgress from 'nprogress'
 import EventService from '@/services/EventService'
 import { useEventStore } from '@/stores/event'
+import OrganizerDetailView from '@/views/organization/OrganizerDetailView.vue'
+import OrganizerListView from '@/views/OrganizerListView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -102,9 +104,21 @@ const router = createRouter({
       component: NetworkErrorView,
     },
     {
+      path: '/organizer',
+      name: 'organizer-list-view',
+      component: OrganizerListView,
+      props: true,
+    },
+    {
       path: '/add-organizer',
       name: 'add-organizer',
       component: OrganizerFormView,
+    },
+    {
+      path: '/organizer/:id',
+      name: 'organizer-detail-view',
+      component: OrganizerDetailView,
+      props: true,
     },
   ],
   scrollBehavior(to, from, savedPosition) {
