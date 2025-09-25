@@ -20,6 +20,9 @@ const { editMessage } = storeToRefs(store)
   <!-- <p>{{ event.time }} on {{ event.date }} @ {{ event.location }}</p> -->
   <p>{{ event.title }} @ {{ event.location }}</p>
   <p>{{ event.description }}</p>
+  <div class="flex flex-row flex-wrap justify-center">
+    <img v-for="image in event.images" :key="image" :src="image" alt="events image" class="border-soild border-gray-200 border-2 rounded p-1 m-1 w-40 hover:shadow-lg" />
+  </div>
 </template>
 
 <style>
