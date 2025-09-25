@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ImageUpload from '@/components/ImageUpload.vue';
 import EventService from '@/services/EventService';
 import { useMessageStore } from '@/stores/message';
 import type { EventItem } from '@/types';
@@ -13,7 +14,8 @@ const event = ref<EventItem>({
   date: '',
   time: '',
   petsAllowed: false,
-  organizer: ''
+  organizer: '',
+  images: []
 })
 const router = useRouter()
 const store = useMessageStore()
@@ -46,6 +48,8 @@ function saveEvent() {
       <h3>Where is your event?</h3>
       <label>Location</label>
       <input v-model="event.location" type="text" placeholder="Location" class="field" />
+      <h3>The image of the Event</h3>
+      <ImageUpload v-model="event.images" />
       <button class="button" type="submit">Submit</button>
     </form>
 

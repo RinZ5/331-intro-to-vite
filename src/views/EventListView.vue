@@ -70,7 +70,7 @@ onMounted(() => {
   <div class="flex flex-col items-center">
     <div class="w-64">
       <!-- <BaseInput v-model="keyword" label="Search..." @input="updateKeyword" /> -->
-      <input v-model="keyword" label="Search..." @input="updateKeyword"></input>
+      <input v-model="keyword" placeholder="Search..." @input="updateKeyword"></input>
     </div>
     <EventCard v-for="event in events" :key="event.id" :event="event" />
     <div class="flex justify-between w-72 mb-4">
