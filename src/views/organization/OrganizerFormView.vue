@@ -8,7 +8,6 @@ import { useRouter } from 'vue-router';
 const organizer = ref<Organizer>({
   id: 0,
   name: '',
-  address: '',
   image: undefined
 })
 const router = useRouter()
@@ -29,9 +28,6 @@ function saveOrganizer() {
     <form @submit.prevent="saveOrganizer">
       <label>Name</label>
       <input v-model="organizer.name" type="text" placeholder="Name" class="field" />
-
-      <label>Address</label>
-      <input v-model="organizer.address" type="text" placeholder="Address" class="field" />
 
       <h3>The image of the Organizer</h3>
       <SingleImageUpload v-model="organizer.image" />
