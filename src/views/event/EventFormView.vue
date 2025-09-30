@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BaseInput from '@/components/BaseInput.vue';
+import BaseSelect from '@/components/BaseSelect.vue';
 import ImageUpload from '@/components/ImageUpload.vue';
 import EventService from '@/services/EventService';
 import OrganizerService from '@/services/OrganizerService';
@@ -65,10 +66,7 @@ onMounted(() => {
       <BaseInput v-model="event.location" type="text" label="location" />
 
       <h3>Who is your organizer?</h3>
-      <select v-model="event.organizer.id">
-        <option v-for="option in organizers" :value="option.id" :key="option.id"
-          :selected="option.id === event.organizer.id">{{ option.name }}</option>
-      </select>
+      <BaseSelect v-model="event.organizer.id" :options="organizers" label="Organizer" />
 
       <h3>The image of the Event</h3>
       <ImageUpload v-model="event.images" />
