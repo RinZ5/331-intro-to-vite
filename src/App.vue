@@ -3,7 +3,7 @@ import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { useMessageStore } from './stores/message'
 import { storeToRefs } from 'pinia'
 import { SpeedInsights } from '@vercel/speed-insights/vue'
-import { mdiAccountPlus, mdiLogin } from '@mdi/js'
+import { mdiAccountPlus, mdiLogin, mdiAccountCircle } from '@mdi/js'
 import { useAuthStore } from './stores/auth'
 
 const store = useMessageStore()
@@ -53,6 +53,12 @@ if (token && user) {
               </li>
             </ul>
             <ul v-if="authStore.currentUserName" class="flex navbar-nav ml-auto">
+              <li class="nav-item px-2 flex items-center">
+                <span class="nav-link flex items-center">
+                  <SvgIcon type="mdi" :path="mdiAccountCircle" />
+                  <span class="ml-2 font-semibold">{{ authStore.currentUserName }}</span>
+                </span>
+              </li>
               <li class="nav-item px-2">
                 <a class="nav-link hover:cursor-pointer" @click="logout">
                   <div class="flex items-center">

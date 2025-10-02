@@ -1,29 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import type { AxiosInstance } from 'axios'
-
-interface AuthUser {
-  id?: number
-  name: string
-  image?: string
-}
-
-function getSubjectFromToken(token: string | null): string | null {
-  if (!token) {
-    return null
-  }
-
-  try {
-    const [, payload] = token.split('.')
-    if (!payload) {
-      return null
-    }
-    const decoded = JSON.parse(atob(payload))
-    return decoded?.sub ?? null
-  } catch (_error) {
-    return null
-  }
-}
+import type { Organizer } from '@/types'
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -37,14 +15,11 @@ const apiClient: AxiosInstance = axios.create({
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: null as string | null,
-    user: null as AuthUser | null,
+    user: null as Organizer | null,
   }),
   getters: {
     currentUserName(): string {
       return this.user?.name || ''
-    },
-    isAuthenticated(): boolean {
-      return Boolean(this.token)
     },
   },
   actions: {
@@ -55,38 +30,10 @@ export const useAuthStore = defineStore('auth', {
           password: password,
         })
         .then((response) => {
-          this.token = response.data.access_token ?? null
-
-          const rawUser = response.data.user
-          let resolvedUser: AuthUser | null = null
-
-          if (rawUser && typeof rawUser === 'object') {
-            const receivedName = rawUser.name || rawUser.username || rawUser.email
-            if (receivedName) {
-              resolvedUser = { ...rawUser, name: receivedName }
-            }
-          }
-
-          if (!resolvedUser) {
-            const fallbackName = getSubjectFromToken(this.token) || email
-            if (fallbackName) {
-              resolvedUser = { name: fallbackName }
-            }
-          }
-
-          this.user = resolvedUser
-
-          if (this.token) {
-            localStorage.setItem('access_token', this.token)
-          } else {
-            localStorage.removeItem('access_token')
-          }
-
-          if (this.user) {
-            localStorage.setItem('user', JSON.stringify(this.user))
-          } else {
-            localStorage.removeItem('user')
-          }
+          this.token = response.data.access_token
+          this.user = response.data.user
+          localStorage.setItem('access_token', this.token as string)
+          localStorage.setItem('user', JSON.stringify(this.user))
           // axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
           return response
         })
@@ -98,7 +45,7 @@ export const useAuthStore = defineStore('auth', {
       localStorage.removeItem('access_token')
       localStorage.removeItem('user')
     },
-    reload(token: string, user: AuthUser | null) {
+    reload(token: string, user: Organizer) {
       this.token = token
       this.user = user
     },
