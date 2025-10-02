@@ -15,6 +15,7 @@ export interface Organizer {
   id: number
   name: string
   image: string | undefined
+  roles: string[]
 }
 
 export interface EventItem {
