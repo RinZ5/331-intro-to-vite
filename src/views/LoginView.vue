@@ -4,6 +4,9 @@ import * as yup from 'yup'
 import { useField, useForm } from 'vee-validate'
 import { useAuthStore } from '@/stores/auth'
 import router from '@/router'
+import { useMessageStore } from '@/stores/message'
+
+const messageStore = useMessageStore()
 
 const authStore = useAuthStore()
 
@@ -25,7 +28,10 @@ const onSubmit = handleSubmit((values) => {
     .then(() => {
       router.push({ name: 'event-list-view' })
     }).catch((err) => {
-      console.log('error', err)
+      messageStore.updateMessage('could not login')
+      setTimeout(() => {
+        messageStore.resetMessage()
+      }, 3000);
     })
 })
 </script>
