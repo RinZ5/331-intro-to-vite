@@ -3,6 +3,11 @@ import axios from 'axios'
 import type { AxiosInstance } from 'axios'
 import type { Organizer } from '@/types'
 
+interface RegisterPayload {
+  username: string
+  password: string
+}
+
 const apiClient: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
   withCredentials: false,
@@ -40,6 +45,9 @@ export const useAuthStore = defineStore('auth', {
           // axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
           return response
         })
+    },
+    register(payload: RegisterPayload) {
+      return apiClient.post('/api/v1/auth/register', payload)
     },
     logout() {
       console.log('logout')
