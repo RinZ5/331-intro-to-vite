@@ -1,11 +1,28 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { useMessageStore } from './stores/message'
 import { storeToRefs } from 'pinia'
 import { SpeedInsights } from '@vercel/speed-insights/vue'
 import { mdiAccountPlus, mdiLogin } from '@mdi/js'
+import { useAuthStore } from './stores/auth'
+
 const store = useMessageStore()
+const authStore = useAuthStore()
+const router = useRouter()
 const { message } = storeToRefs(store)
+
+function logout() {
+  authStore.logout()
+  router.push({ name: 'login' })
+}
+
+const token = localStorage.getItem('access_token')
+const user = localStorage.getItem('user')
+if (token && user) {
+  authStore.reload(token, JSON.parse(user))
+} else {
+  authStore.logout()
+}
 </script>
 
 <template>
@@ -19,7 +36,7 @@ const { message } = storeToRefs(store)
       <div class="wrapper">
         <nav class="py-6">
           <nav class="flex">
-            <ul class="flex navbar-nav ml-auto">
+            <ul v-if="!authStore.currentUserName" class="flex navbar-nav ml-auto">
               <li class="nav-item px-2">
                 <router-link to="/register" class="nav-link">
                   <div class="flex items-center">
@@ -33,6 +50,15 @@ const { message } = storeToRefs(store)
                     <SvgIcon type="mdi" :path="mdiLogin" /> <span class="ml-3">Login</span>
                   </div>
                 </router-link>
+              </li>
+            </ul>
+            <ul v-if="authStore.currentUserName" class="flex navbar-nav ml-auto">
+              <li class="nav-item px-2">
+                <a class="nav-link hover:cursor-pointer" @click="logout">
+                  <div class="flex items-center">
+                    <SvgIcon type="mdi" :path="mdiLogin" /> <span class="ml-3">LogOut</span>
+                  </div>
+                </a>
               </li>
             </ul>
           </nav>

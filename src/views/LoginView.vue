@@ -25,8 +25,9 @@ const { value: password } = useField<string>('password')
 
 const onSubmit = handleSubmit((values) => {
   authStore.login(values.email, values.password)
-    .then(() => {
+    .then((response) => {
       router.push({ name: 'event-list-view' })
+      console.log('response', response.data)
     }).catch((err) => {
       messageStore.updateMessage('could not login')
       setTimeout(() => {
